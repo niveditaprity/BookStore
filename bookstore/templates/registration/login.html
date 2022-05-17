@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block nav_title %}
+    Login
+{% endblock %}
+
+{% block content %}
+
+
+    
+
+<section class="">
+
+
+<form class="bg-gray-100 p-4 rounded shadow" method="post" action="{% url 'login' %}">
+{% csrf_token %}
+<div class="flex justify-between py-2">
+    <div class="mr-4">{{ form.username.label_tag }}</div>
+    <div>{{ form.username }}</div>
+</div>
+<div class="flex justify-between py-2">
+    <div class="mr-4">{{ form.password.label_tag }}</div>
+    <div>{{ form.password }}</div>
+</div>
+
+<input type="submit" value="login" class="py-1 px-2 mt-5 bg-green-400 text-white rounded w-full cursor-pointer hover:bg-green-800">
+<input type="hidden" name="next" value="{{ next }}">
+
+<p class="text-sm mt-5"><a href="{% url 'password_reset' %}">Lost password?</a></p>
+</form>
+</section>
+{# Assumes you setup the password_reset view in your URLconf #}
+
+
+{% endblock %}
+
+
+<!-- {% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %} -->

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Bookstore - {{book.title}}
+{% endblock  %}
+
+
+{% block nav_title %}
+{{book.title}}
+{% endblock %}
+
+
+{% block content %}
+<div class="flex justify-between mt-10">
+{% for book in books %}
+<a href="/booksapp/books/{{book.id}}" class="justify-self-center text-center my-4" target="_blank">
+<div class="flex justify-center">
+<p>{{ book.title }}</p>
+</div>
+<img src="{{ book.image.url }}" width="200" height="200">
+</a>
+{% endfor %}
+</div>
+{% endblock %}

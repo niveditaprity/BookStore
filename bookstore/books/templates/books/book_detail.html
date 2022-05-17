@@ -1,0 +1,72 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+  Bookstore - {{book.title}}
+{% endblock  %}
+
+
+{% block nav_title %}
+{{book.title}}
+{% endblock %}
+
+
+{% block content %}
+<div class="w-10/12">
+  <div class="flex justify-between mt-10">
+    <div class="flex justify-between">
+      <div class="w-3/12">
+        <img src="{{book.image.url}}" width="200" />
+      </div>
+      <div class="w-9/12">
+        <p class="text-3xl">About</p>
+        <p class="text-gray-600 mt-5">{{book.shortDescription}}</p>
+
+        <div class="mt-10">
+          <p class="text-3xl">Pages</p>
+          <p class="text-gray-600 mt-5">Total {{book.pageCount}} pages</p>
+        </div>
+
+        <div class="mt-10">
+          <p class="text-3xl">Author</p>
+          <div class="text-gray-600 mt-5">
+            {% for author in authors %}
+            <a href="{% url 'author.books' author %}">{{author}}
+            {% endfor %}
+          </a>
+        </div>
+
+        
+</div>
+{% if user.is_authenticated %}
+<form action="{% url 'books.review' book.id %}" method="POST">
+    {% csrf_token %}
+    <textarea class="comment" name="review">Type your comment here.</textarea>
+    <br>
+    <button
+              type="submit"
+              class="float-right border rounded p-2 bg-gray-800 text-white"
+            >
+              Submit
+            </button>
+  </form>
+
+{% else %}
+          <p>
+            <a class="text-blue-600" href="{% url 'login' %}?next={{request.path}}">Login</a> to write review
+          </p>
+          {% endif %}
+  
+  <div>
+      {% for r in reviews %}
+      <div class="my-6">
+        <div class="flex justify-between">
+          <p class="text-gray-400">{{r.user}}</p>
+          <p class="text-gray-400">{{r.created_at}}</p>
+        </div>
+        <p>{{r.body}}</p>
+        </div>
+      {% endfor %}
+  </div>
+
+  {% endblock %}
